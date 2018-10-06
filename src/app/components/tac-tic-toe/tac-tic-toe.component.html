@@ -1,0 +1,9 @@
+<div class="tac-tic-toe-container">
+  <mat-grid-list cols="3" rowHeight="120px">
+    <mat-grid-tile class="block-container" *ngFor="let block of blocks">
+      <div class="box">
+        <span>{{block.title}}</span>
+      </div>
+    </mat-grid-tile>
+  </mat-grid-list>
+</div>

@@ -1,0 +1,15 @@
+@import 'color';
+@import 'variable';
+
+.tac-tic-toe-container {
+
+    .block-container {
+        border: 1px solid $black;
+        .box {
+            font-weight: 600;
+            span {
+                margin: auto;
+            }
+        }
+    }
+}
