@@ -33,7 +33,9 @@ export class TacTicToeComponent implements OnInit {
 
   }
 
-
+  /** 
+     * User click function
+     */
   playerClick(event: any, block: any): void {
 
     if ((this.gameService.blocks[block.id - 1].isLocked || this.lock == true) || !this.gameService.isYourTurn(this.userName)) {
@@ -75,11 +77,17 @@ export class TacTicToeComponent implements OnInit {
 
   }
 
+  /** 
+ * Initiate the player.
+ */
   initPlayer(): void {
     this.gameService.initPlayer(this.userName);
   }
 
 
+  /** 
+   * Function to subscribe to the channel
+   */
   pushListener(): void {
     this.pusherService.messagesChannel.bind('client-tac-tic', (response) => {
 
@@ -117,7 +125,9 @@ export class TacTicToeComponent implements OnInit {
     return this.gameService.players.length == 2;
   }
 
-
+  /** 
+    * Reset the game.
+    */
   resetGame(): void {
     this.gameService.freeBlocksRemaining = 9;
     this.gameService.initBlocks();
@@ -126,12 +136,18 @@ export class TacTicToeComponent implements OnInit {
     location.reload();
   }
 
+  /** 
+   * This function uses to change the theme.
+   */
   onChangeTheme(event: object): void {
     let selectedTheme: string = event['value'];
     this.gameService.changeTheme(selectedTheme);
   }
 
-
+  /** 
+     * Validate the userName - input alphanumeric characters in user name, additionally - and _ are
+  also allowed in user name.
+     */
   isValidUserName(userName: string): boolean {
     let patt: any = /^[A-Za-z_-]+$/;
     return patt.test(userName.trim());

@@ -61,6 +61,9 @@ export class GameService {
     this.userAction('init-player', this.players);
   }
 
+  /** 
+* Change the user turn.
+*/
   changeTurn() {
 
     if (this.turn == 1) {
@@ -72,6 +75,9 @@ export class GameService {
     return this.turn;
   }
 
+  /** 
+* Check whether user has completed the game.Check all winning senarios.
+*/
   blockSetComplete(): boolean {
 
     let block1: Block = this.blocks[0];
@@ -100,7 +106,9 @@ export class GameService {
     }
     return false;
   }
-
+  /** 
+* Trigger push notification.
+*/
   userAction(action: string, data: any) {
     let message: Message = {
       action: action,
@@ -155,7 +163,9 @@ export class GameService {
     return response.data.completed;
 
   }
-
+  /** 
+  * Change the theme.
+  */
   changeTheme(color: string) {
     let theme: object = {
       color: color,
