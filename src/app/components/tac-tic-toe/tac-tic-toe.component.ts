@@ -20,7 +20,7 @@ export class TacTicToeComponent implements OnInit {
 
   @ViewChild('textContent') textContent: ElementRef;
 
-  constructor(private pusherService: PusherService, private gameService: GameService) {
+  constructor(private pusherService: PusherService, public gameService: GameService) {
     this.messages = [];
 
   }
