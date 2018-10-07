@@ -15,7 +15,7 @@ export class PusherService {
 
 
   constructor() { 
-     Pusher.logToConsole = true;
+    //  Pusher.logToConsole = true;
      this.pusher = new Pusher(this.pusherKey,{
       authEndpoint: environment.pusher.endpoint,
       cluster: environment.pusher.cluster
