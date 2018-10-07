@@ -14,9 +14,9 @@ export class PusherService {
   messagesChannel: any;
 
 
-  constructor() { 
+  constructor() {
     //  Pusher.logToConsole = true;
-     this.pusher = new Pusher(this.pusherKey,{
+    this.pusher = new Pusher(this.pusherKey, {
       authEndpoint: environment.pusher.endpoint,
       cluster: environment.pusher.cluster
     });
