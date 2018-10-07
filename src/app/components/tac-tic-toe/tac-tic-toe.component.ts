@@ -95,4 +95,10 @@ export class TacTicToeComponent implements OnInit {
     this.gameService.changeTheme(selectedTheme);
   }
 
+
+  isValidUserName(userName: string): boolean {
+    let patt: any = /^[A-Za-z_-]+$/;
+    return patt.test(userName.trim());
+  }
+
 }

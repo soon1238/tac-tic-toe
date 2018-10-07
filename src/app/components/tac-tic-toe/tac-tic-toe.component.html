@@ -22,7 +22,7 @@
           <span #textContent>{{userName}}</span>
         </div>
         <div class="connect-btn">
-          <button mat-raised-button color="primary" type="button" (click)="initPlayer()" [disabled]="disableFields()">{{
+          <button mat-raised-button color="primary" type="button" (click)="initPlayer()" [disabled]="disableFields() || !this.isValidUserName(userName)">{{
             disableFields() ? 'Connected!': 'Connect'}}</button>
         </div>
       </div>
