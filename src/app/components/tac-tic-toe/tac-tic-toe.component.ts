@@ -50,9 +50,19 @@ export class TacTicToeComponent implements OnInit {
       this.gameService.blocks[block.id - 1].symbol = 'cross';
     }
     this.gameService.changeTurn();
-    let complete: boolean = this.gameService.blockSetComplete();
-    this.gameService.userClick(this.gameService.blocks[block.id - 1], complete, this.userName);
+    let complete: boolean = this.gameService.blockSetComplete(),
+      gameStatus: object = { isCompletd: complete, userName: this.userName, remCount: this.gameService.freeBlocksRemaining };
+
+    this.gameService.userClick(this.gameService.blocks[block.id - 1], gameStatus);
     if (complete == false) {
+
+      if (this.gameService.freeBlocksRemaining <= 0) {
+        this.lock = true;
+        this.textContent.nativeElement.textContent = `Game is draw!`;
+        setTimeout(() => {
+          this.resetGame();
+        }, 5000);
+      }
       return;
 
     } else {
@@ -79,6 +89,13 @@ export class TacTicToeComponent implements OnInit {
 
         this.lock = true;
         this.textContent.nativeElement.textContent = (result['userName'] == this.userName) ? `You are the winner!` : `${result['userName']} is the winner!`;
+        setTimeout(() => {
+          this.resetGame();
+        }, 5000);
+
+      } else if (!this.lock && result && !result['isCompletd'] && response.action == 'user-turn' && result['remCount'] <= 0) {
+        this.lock = true;
+        this.textContent.nativeElement.textContent = `Game is draw!`;
         setTimeout(() => {
           this.resetGame();
         }, 5000);

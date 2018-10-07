@@ -124,11 +124,11 @@ export class GameService {
     return result;
   }
 
-  userClick(block: object, completed: boolean, userName: string): void {
+  userClick(block: object, gameStatus: object): void {
     let userTurn: object = {
       turn: this.turn,
       block: block,
-      completed: { isCompletd: completed, userName: userName }
+      completed: gameStatus
     };
     this.userAction('user-turn', userTurn);
   }
@@ -151,8 +151,9 @@ export class GameService {
         block.symbol = changedBlock.symbol;
       }
     });
+    this.freeBlocksRemaining = response.data.completed.remCount;
     return response.data.completed;
-    
+
   }
 
   changeTheme(color: string) {
