@@ -9,7 +9,7 @@
         </div>
         <div class="field" ngClass.xs="mobile">
           <mat-form-field>
-            <mat-select placeholder="Selct Theme" (selectionChange)="onChangeTheme($event)">
+            <mat-select placeholder="Select Theme" (selectionChange)="onChangeTheme($event)">
               <mat-option *ngFor="let theme of gameService.themes" [value]="theme.color">
                 {{theme.theme}}
               </mat-option>
