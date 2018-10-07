@@ -1,7 +1,7 @@
 export class Block {
-    id: string;
-    isFree: boolean;
+    id: number;
     symbol?: string;
     userId?: string;
     title?: any;
+    isLocked: boolean = false;
 }

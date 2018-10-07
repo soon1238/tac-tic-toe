@@ -3,7 +3,11 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  pusher: {
+    key: 'e31eef0acf7f58091bd0',
+    endpoint: 'http://localhost:7200/pusher/auth/'
+  }
 };
 
 /*
