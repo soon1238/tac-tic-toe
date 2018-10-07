@@ -57,7 +57,7 @@ export class TacTicToeComponent implements OnInit {
 
     } else {
       this.lock = true;
-      this.textContent.nativeElement.textContent = `${this.userName} is the winner!`;
+      this.textContent.nativeElement.textContent = `You are the winner!`;
       setTimeout(() => {
         this.resetGame();
       }, 5000);
@@ -72,13 +72,25 @@ export class TacTicToeComponent implements OnInit {
 
   pushListener(): void {
     this.pusherService.messagesChannel.bind('client-tac-tic', (response) => {
-      let result: object = this.gameService.pushListener(response);
-      if (!this.lock && result && result['isCompletd']) {
+
+      let result: any = this.gameService.pushListener(response);
+
+      if (!this.lock && result && result['isCompletd'] && response.action == 'user-turn') {
+
         this.lock = true;
-        this.textContent.nativeElement.textContent = `${result['userName']} is the winner!`;
+        this.textContent.nativeElement.textContent = (result['userName'] == this.userName) ? `You are the winner!` : `${result['userName']} is the winner!`;
         setTimeout(() => {
           this.resetGame();
         }, 5000);
+
+      } else if (!this.lock && result && response.action == 'init-player') {
+
+        let found: object = result.find((element) => {
+          return element.name != this.userName;;
+        });
+        if (found) {
+          this.textContent.nativeElement.textContent = `${found['name']} joined!`;
+        }
       }
     });
     this.pusherService.messagesChannel.bind('pusher:subscription_succeeded', (members) => { });

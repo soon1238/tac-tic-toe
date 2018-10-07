@@ -114,6 +114,7 @@ export class GameService {
     let result: object = {};
     if (response.action == 'init-player') {
       this.players = response.data;
+      result = response.data;
     } else if (response.action == 'user-turn') {
       result = this.fillBlock(response);
     } else if (response.action == 'user-color') {
