@@ -16,9 +16,9 @@ export class PusherService {
 
   constructor() { 
      Pusher.logToConsole = true;
-     this.pusher = new Pusher('e31eef0acf7f58091bd0',{
-      authEndpoint: 'http://localhost:7200/pusher/auth',
-      cluster: 'ap1'
+     this.pusher = new Pusher(this.pusherKey,{
+      authEndpoint: environment.pusher.endpoint,
+      cluster: environment.pusher.cluster
     });
     this.messagesChannel = this.pusher.subscribe('private-messages');
 

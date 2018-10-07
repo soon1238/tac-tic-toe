@@ -17,10 +17,6 @@ export class TacTicToeComponent implements OnInit {
   messages: Array<any>;
   userName: string = '';
   messageText: string = '';
-  themes: Array<any> = [
-    { theme: 'White', color: '#FFFF' },
-    { theme: 'Black', color: '#000' }
-  ];
 
   @ViewChild('textContent') textContent: ElementRef;
 
@@ -92,6 +88,11 @@ export class TacTicToeComponent implements OnInit {
     this.lock = false;
     this.gameService.turn = 0;
     location.reload();
+  }
+
+  onChangeTheme(event: object): void {
+    let selectedTheme: string = event['value'];
+    this.gameService.changeTheme(selectedTheme);
   }
 
 }

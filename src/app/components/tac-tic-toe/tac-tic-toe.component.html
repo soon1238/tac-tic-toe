@@ -4,14 +4,13 @@
       <div class="connect">
         <div class="field" ngClass.xs="mobile">
           <mat-form-field class="example-full-width">
-            <input matInput id="userName" [(ngModel)]="userName" placeholder="Name" maxlength="8" [disabled]="disableFields()"> 
+            <input matInput id="userName" [(ngModel)]="userName" placeholder="Name" maxlength="8" [disabled]="disableFields()">
           </mat-form-field>
-          <!-- <button mat-raised-button color="primary" type="button" (click)="initPlayer()">Connect!</button> -->
         </div>
         <div class="field" ngClass.xs="mobile">
           <mat-form-field>
-            <mat-select placeholder="Selct Theme">
-              <mat-option *ngFor="let theme of themes" [value]="theme.color">
+            <mat-select placeholder="Selct Theme" (selectionChange)="onChangeTheme($event)">
+              <mat-option *ngFor="let theme of gameService.themes" [value]="theme.color">
                 {{theme.theme}}
               </mat-option>
             </mat-select>
@@ -23,8 +22,8 @@
           <span #textContent>{{userName}}</span>
         </div>
         <div class="connect-btn">
-          <button mat-raised-button color="primary" type="button" (click)="initPlayer()" [disabled]="disableFields()">{{ disableFields() ? 'Connected!': 'Connect'}}</button>
-
+          <button mat-raised-button color="primary" type="button" (click)="initPlayer()" [disabled]="disableFields()">{{
+            disableFields() ? 'Connected!': 'Connect'}}</button>
         </div>
       </div>
     </div>
@@ -32,7 +31,8 @@
 
   <div class="container tac-tic-pool">
     <mat-grid-list cols="3" ngClass.md="tablet" ngClass.lg="tablet" ngClass.xs="mobile" ngClass.sm="sm-mobile">
-      <mat-grid-tile class="block-container" *ngFor="let block of blocks" (click)="playerClick($event,block)">
+      <mat-grid-tile class="block-container" *ngFor="let block of blocks" (click)="playerClick($event,block)"
+        [style.background-color]="gameService.selectedTheme">
         <div class="box">
           <i class="material-icons" *ngIf="block.isLocked">{{ (block.symbol == 'tick') ? 'check' : block.symbol ==
             'cross' ? 'close' : ''}}</i>

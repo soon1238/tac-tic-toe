@@ -14,6 +14,14 @@ export class GameService {
   freeBlocksRemaining = 9;
   turn: number = 0;
   draw: number = 0;
+  selectedTheme: string = '#FCFCFC';
+  themes: Array<any> = [
+    { theme: 'White', color: '#FFFF' },
+    { theme: 'Tiffany', color: '#81D8D0' },
+    { theme: 'Baby Blue', color: '#7EF9FF' },
+    { theme: 'Carnation', color: '#FFA6C9' },
+    { theme: 'Laurel Green', color: '#A9BA9D' }
+  ];
 
   constructor(private pusherService: PusherService) {
 
@@ -66,17 +74,17 @@ export class GameService {
 
   blockSetComplete(): boolean {
 
-    var block1: Block = this.blocks[0];
-    var block2: Block = this.blocks[1];
-    var block3: Block = this.blocks[2];
+    let block1: Block = this.blocks[0];
+    let block2: Block = this.blocks[1];
+    let block3: Block = this.blocks[2];
 
-    var block4: Block = this.blocks[3];
-    var block5: Block = this.blocks[4];
-    var block6: Block = this.blocks[5];
+    let block4: Block = this.blocks[3];
+    let block5: Block = this.blocks[4];
+    let block6: Block = this.blocks[5];
 
-    var block7: Block = this.blocks[6];
-    var block8: Block = this.blocks[7];
-    var block9: Block = this.blocks[8];
+    let block7: Block = this.blocks[6];
+    let block8: Block = this.blocks[7];
+    let block9: Block = this.blocks[8];
 
     if (
       (block1.isLocked && block2.isLocked && block3.isLocked && (block1.symbol == block2.symbol) && (block1.symbol == block3.symbol)) ||
@@ -102,10 +110,13 @@ export class GameService {
   }
 
   pushListener(response): void {
+
     if (response.action == 'init-player') {
       this.players = response.data;
     } else if (response.action == 'user-turn') {
       this.fillBlock(response);
+    } else if (response.action == 'user-color') {
+      this.fillTheme(response);
     }
   }
 
@@ -128,11 +139,23 @@ export class GameService {
   fillBlock(response: any): void {
     this.turn = response.data.turn;
     let changedBlock = response.data.block;
+
     this.blocks.forEach((block, index) => {
       if (block.id === changedBlock.id) {
         block.isLocked = changedBlock.isLocked;
         block.symbol = changedBlock.symbol;
       }
     });
+  }
+
+  changeTheme(color: string) {
+    let theme: object = {
+      color: color,
+    };
+    this.userAction('user-color', theme);
+  }
+
+  fillTheme(response: any): void {
+    this.selectedTheme = response.data.color;
   }
 }
