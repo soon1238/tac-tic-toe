@@ -57,13 +57,13 @@
              margin: auto;
         }
          .tablet {
-             width: 400px;
+             width: $sm-mobile-width;
         }
          .mobile {
-             width: 200px;
+             width: $mobile-width;
         }
          .sm-mobile {
-             width: 300px;
+             width: $sm-mobile-width;
         }
          mat-grid-list {
              padding-bottom: 0px !important;
