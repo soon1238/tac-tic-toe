@@ -109,21 +109,25 @@ export class GameService {
     this.pusherService.messagesChannel.trigger('client-tac-tic', message);
   }
 
-  pushListener(response): void {
+  pushListener(response): any {
 
+    let result: object = {};
     if (response.action == 'init-player') {
       this.players = response.data;
     } else if (response.action == 'user-turn') {
-      this.fillBlock(response);
+      result = this.fillBlock(response);
     } else if (response.action == 'user-color') {
       this.fillTheme(response);
     }
+
+    return result;
   }
 
-  userClick(block: object): void {
+  userClick(block: object, completed: boolean, userName: string): void {
     let userTurn: object = {
       turn: this.turn,
-      block: block
+      block: block,
+      completed: { isCompletd: completed, userName: userName }
     };
     this.userAction('user-turn', userTurn);
   }
@@ -136,7 +140,7 @@ export class GameService {
     return (found) ? true : false;
   }
 
-  fillBlock(response: any): void {
+  fillBlock(response: any): any {
     this.turn = response.data.turn;
     let changedBlock = response.data.block;
 
@@ -146,6 +150,8 @@ export class GameService {
         block.symbol = changedBlock.symbol;
       }
     });
+    return response.data.completed;
+    
   }
 
   changeTheme(color: string) {

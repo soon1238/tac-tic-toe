@@ -50,8 +50,8 @@ export class TacTicToeComponent implements OnInit {
       this.gameService.blocks[block.id - 1].symbol = 'cross';
     }
     this.gameService.changeTurn();
-    var complete = this.gameService.blockSetComplete();
-    this.gameService.userClick(this.gameService.blocks[block.id - 1]);
+    let complete: boolean = this.gameService.blockSetComplete();
+    this.gameService.userClick(this.gameService.blocks[block.id - 1], complete, this.userName);
     if (complete == false) {
       return;
 
@@ -72,7 +72,14 @@ export class TacTicToeComponent implements OnInit {
 
   pushListener(): void {
     this.pusherService.messagesChannel.bind('client-tac-tic', (response) => {
-      this.gameService.pushListener(response);
+      let result: object = this.gameService.pushListener(response);
+      if (!this.lock && result && result['isCompletd']) {
+        this.lock = true;
+        this.textContent.nativeElement.textContent = `${result['userName']} is the winner!`;
+        setTimeout(() => {
+          this.resetGame();
+        }, 5000);
+      }
     });
     this.pusherService.messagesChannel.bind('pusher:subscription_succeeded', (members) => { });
   }
